@@ -13,40 +13,68 @@ const DATA = [
   {
     id: '1',
     title: 'First Item',
+    imagePath: require("./assets/1.jpg"),
+    description:"ttttttt",
+    price:"100/-"
   },
   {
     id: '2',
     title: 'Second Item',
+    imagePath: require("./assets/2.jpg"),
+    description:"ttttttt",
+    price:"100/-"
   },
   {
     id: '3',
-    title: 'Third Item',
+    title: 'First Item',
+    imagePath: require("./assets/3.jpg"),
+    description:"ttttttt",
+    price:"100/-"
   },
   {
     id: '4',
-    title: 'Third Item',
+    title: 'Second Item',
+    imagePath: require("./assets/4.jpg"),
+    description:"ttttttt",
+    price:"100/-"
   },
   {
     id: '5',
-    title: 'Third Item',
+    title: 'First Item',
+    imagePath: require("./assets/5.jpg"),
+    description:"ttttttt",
+    price:"100/-"
+  },
+  {
+    id: '6',
+    title: 'Second Item',
+    imagePath: require("./assets/6.jpg"),
+    description:"ttttttt",
+    price:"100/-"
   },
 ];
 
-const Item = ({ title, imgPath }) => (
-  <View style={styles.item}>
-    <Text style={styles.title}>{title}</Text>
-    <Image
-      style={styles.tinyLogo}
-      source={imgPath}
-    />
+const Item = ({ title, imgPath, description, price }) => (
+  <View style={styles.itemView}>
+    <View style={styles.imgView}>
+      <Image
+        style={styles.img}
+        source={imgPath}
+      />
+    </View>
+
+    <View style={styles.textView}>
+      <Text style={[styles.title,{fontWeight:'bold', fontSize:22}]}>{title}</Text>
+      <Text style={styles.title}>{description}</Text>
+      <Text style={styles.title}>{price}</Text>
+    </View>
   </View>
 );
 
 const App = () => {
-  const renderItem = ({ item, index }) => {
-    let imgPath = require("./assets/1.jpg")
+  const renderItem = ({ item }) => {
     return (
-      <Item title={item.title} imgPath={imgPath} />
+      <Item title={item.title} imgPath={item.imagePath} description={item.description} price={item.price} />
     );
   }
 
@@ -67,14 +95,28 @@ const styles = StyleSheet.create({
     flex: 1,
     marginTop: StatusBar.currentHeight || 0,
   },
-  item: {
-    padding: 20,
+  itemView: {
+    padding: 5,
     marginVertical: 8,
-    marginHorizontal: 16,
+    marginHorizontal: 10,
+    flexDirection:'row',
+    borderBottomWidth:1,
+    borderBottomColor:"grey"
   },
   title: {
-    fontSize: 32,
+    fontSize: 20,
+    paddingLeft:15
   },
+  img:{
+width:120,
+height:120
+  },
+  imgView:{
+
+  },
+  textView:{
+justifyContent:"center",
+  }
 });
 
 export default App;
