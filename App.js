@@ -7,65 +7,73 @@
  */
 
 import React from 'react';
-import { useColorScheme,SafeAreaView, View, VirtualizedList, StyleSheet, Text, StatusBar } from 'react-native';
+import { SafeAreaView, View, VirtualizedList, StyleSheet, Text, StatusBar, Image, FlatList } from 'react-native';
 
-import {
-  Colors
-} from 'react-native/Libraries/NewAppScreen';
+const DATA = [
+  {
+    id: '1',
+    title: 'First Item',
+  },
+  {
+    id: '2',
+    title: 'Second Item',
+  },
+  {
+    id: '3',
+    title: 'Third Item',
+  },
+  {
+    id: '4',
+    title: 'Third Item',
+  },
+  {
+    id: '5',
+    title: 'Third Item',
+  },
+];
 
-const DATA = [];
-
-const getItem = (data, index) => ({
-  id: Math.random().toString(12).substring(0),
-  title: `Item ${index+1}`
-});
-
-const getItemCount = (data) => 20;
-
-const Item = ({ title }) => (
+const Item = ({ title, imgPath }) => (
   <View style={styles.item}>
     <Text style={styles.title}>{title}</Text>
+    <Image
+      style={styles.tinyLogo}
+      source={imgPath}
+    />
   </View>
 );
 
-const App: () => Node = () => {
-  const isDarkMode = useColorScheme() === 'dark';
-
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
+const App = () => {
+  const renderItem = ({ item, index }) => {
+    let imgPath = require("./assets/1.jpg")
+    return (
+      <Item title={item.title} imgPath={imgPath} />
+    );
+  }
 
   return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-      <VirtualizedList
+    <SafeAreaView style={styles.container}>
+      <FlatList
+        scrollEnabled={true}
         data={DATA}
-        initialNumToRender={4}
-        renderItem={({ item }) => <Item title={item.title} />}
-        keyExtractor={item => item.key}
-        getItemCount={getItemCount}
-        getItem={getItem}
+        renderItem={renderItem}
+        keyExtractor={item => item.id}
       />
     </SafeAreaView>
   );
-};
+}
 
 const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
+  container: {
+    flex: 1,
+    marginTop: StatusBar.currentHeight || 0,
   },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
+  item: {
+    padding: 20,
+    marginVertical: 8,
+    marginHorizontal: 16,
   },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-  },
-  highlight: {
-    fontWeight: '700',
+  title: {
+    fontSize: 32,
   },
 });
 
